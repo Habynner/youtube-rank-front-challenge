@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+@layer components {
+  .container {
+    @apply mx-auto max-w-7xl px-4;
+  }
+
+  .botao {
+    @apply flex justify-center items-center;
+    @apply gap-2 rounded-md px-9 h-9;
+    @apply text-sm font-semibold;
+  }
+
+  .botao.azul {
+    @apply bg-blue-900 text-white;
+  }
+
+  .botao.azul:hover {
+    @apply bg-blue-800;
+  }
+
+  .botao.nav {
+    @apply bg-slate-900 text-white;
+  }
+
+  .botao.nav:hover {
+    @apply bg-slate-800;
+  }
+
+  .botao.nav2 {
+    @apply bg-neutral-800 text-white;
+  }
+
+  .botao.nav2:hover {
+    @apply bg-neutral-900;
+  }
+
+  .botao.vermelho {
+    @apply bg-red-700 text-white;
+  }
+
+  .botao.vermelho:hover {
+    @apply bg-red-800;
+  }
+
+  .botao.verde {
+    @apply bg-green-500 text-white;
+  }
+
+  .botao.verde:hover {
+    @apply bg-green-600;
+  }
+
+  .botao.amarelo {
+    @apply bg-yellow-700 text-white;
+  }
+
+  .botao.amarelo:hover {
+    @apply bg-yellow-800;
+  }
+
+  .botao.cinza {
+    @apply bg-zinc-700 text-white;
+  }
+
+  .botao.cinza:hover {
+    @apply bg-zinc-800;
+  }
+
+  input {
+    color-scheme: dark;
+  }
+}
