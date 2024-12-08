@@ -10,11 +10,11 @@ export default function Cadastrar() {
         <CampoEntrada
             label="Name"
             descricao="Digite seu nome"
-            value={usuario.nome ?? ""}
+            value={usuario.name ?? ""}
             onChange={(e) =>
                 alterarUsuario({
                  ...usuario,
-                 nome: e.target.value,
+                 name: e.target.value,
                  })
               }
         />

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
@@ -25,7 +26,7 @@ export interface ContextoRankProps {
 const ContextoRank = createContext<ContextoRankProps>({} as any);
 
 export function ProvedorContextoRank(props: any) {
-  const { httpGet, httpPost, httpPut } = useAPI();
+  const { httpGet, httpPost, httpPut, httpGetMe } = useAPI();
   const { adicionarErro } = useMensagens();
   const router = useRouter();
 
@@ -37,7 +38,13 @@ export function ProvedorContextoRank(props: any) {
   const salvarVideo = useCallback(
     async function () {
       try {
-        video.userId = "a61a9056-1165-46ed-9bee-ab2cd288d70";
+        const token = localStorage.getItem('authToken');
+        if(!token) {
+          router.push("login");
+          return
+        }
+        const logedUser = await httpGetMe("auth/me", token);
+        video.userId = logedUser.id;
         video.votes = 0;
         const videoCriado = await httpPost("/videos", video);
         router.push("/ranking");
@@ -89,7 +96,12 @@ export function ProvedorContextoRank(props: any) {
   const fazerLogin = useCallback(
     async function () {
       try {
-        await httpPost(`/auth/login`, {username: usuario.email, password: usuario.senha});
+       const res = await httpPost(`/auth/login`, {username: usuario.email, password: usuario.senha});
+      localStorage.setItem('authToken', res.access_token);
+       if (!res.access_token) {
+
+          throw new Error("usuario não autenticado.");
+      }
         router.push("/home");
       } catch (error: any) {
         adicionarErro(error.messagem ?? "Ocorreu um erro inesperado!");

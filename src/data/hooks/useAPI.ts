@@ -40,6 +40,19 @@ export default function useAPI() {
     return extrairDados(resposta);
   }, []);
 
+  const httpGetMe = useCallback(async function (caminho: string, token: string) {
+    const uri = caminho.startsWith("/") ? caminho : `/${caminho}`;
+    const urlCompleta = `http://localhost:4000${uri}`;
+
+    const resposta = await fetch(urlCompleta, {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      }
+    });
+    return extrairDados(resposta);
+  }, []);
+
   async function extrairDados(reposta: Response) {
     let conteudo: any;
 
@@ -58,5 +71,5 @@ export default function useAPI() {
     return conteudo;
   }
 
-  return { httpGet, httpPost, httpPut };
+  return { httpGet, httpPost, httpPut, httpGetMe };
 }
